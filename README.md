@@ -7,7 +7,7 @@
 
 ## Sobre o Projeto
 
-Este é o meu primeiro projeto fullstack usando **React**, **Node.js** e **TypeScript**. O objetivo deste projeto é criar um gerenciador de tarefas como parte de um trabalho da faculdade.
+Este é o meu primeiro projeto fullstack criado do zero usando **React**, **Node.js** , **TypeScript** e várias outras tecnologias. O objetivo deste projeto é criar um gerenciador de tarefas como parte de um trabalho da faculdade.
 
 ## Tecnologias Utilizadas
 
