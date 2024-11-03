@@ -1,0 +1,70 @@
+.topo-login{
+    height: 100px;
+    width: 100%;
+    background-color: #A0AEC0;
+    margin-bottom: 100px;
+}
+
+.login-div {
+    padding: 50px 120px 120px;
+    background: #00B5D8;
+    color: #FFF;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+}
+
+.title-login{
+    text-transform: uppercase;
+    font-size: 55px;
+    margin-bottom: 45px;
+    font-family: "Karla", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.email-div,
+.password-div{
+    margin-bottom: 30px;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+.input-login{
+    font-family: "Karla", sans-serif;
+    font-size: 18px;
+    padding: 20px;
+    height: 60px;
+    border-radius: 20px;
+    border: 1px solid #000;
+}
+
+label{
+    text-transform: uppercase;
+    font-size: 28px;
+    font-family: "Karla", sans-serif;
+}
+
+.botao-login {
+    width: 513px;
+    height: 132px;
+}
+
+.botao-login button {
+    height: 80px;
+    color: #FFF;
+    font-size: 34px;
+    background-color: #2D3748;
+    border-radius: 20px;
+    border: none;
+    width: 100%;
+    font-family: "Karla", sans-serif;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+.botao-login button:hover {
+    background-color: #4A5568;
+}
