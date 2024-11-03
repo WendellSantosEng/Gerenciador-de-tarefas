@@ -14,25 +14,17 @@ Este é o meu primeiro projeto fullstack criado do zero usando **React**, **Node
 - **React**: Biblioteca JavaScript para construção de interfaces de usuário.
 - **Node.js**: Ambiente de execução JavaScript server-side.
 - **TypeScript**: Superset de JavaScript que adiciona tipagem estática.
+- **Bootstrap**: Framework CSS para desenvolvimento responsivo e rápido.
+- **Fastify**: Framework web para Node.js focado em performance.
+- **React Router DOM**: Biblioteca para roteamento em aplicações React.
+- **Axios**: Cliente HTTP baseado em Promises para fazer requisições.
+- **MongoDB**: Banco de dados NoSQL orientado a documentos.
 
 ## Funcionalidades
 
 - Adicionar, editar e remover tarefas.
 - Marcar tarefas como concluídas.
 - Visualizar lista de tarefas pendentes e concluídas.
-
-## Como Executar o Projeto
-
-### Pré-requisitos
-
-- Node.js instalado
-- Gerenciador de pacotes npm ou yarn
-
-### Executando o Frontend
-
-```bash
-cd frontend
-npm install
-npm start
+- Projeto totalmente inspirado no Trello e em suas vertentes.
 
 Desenvolvido por Wendell Santos
