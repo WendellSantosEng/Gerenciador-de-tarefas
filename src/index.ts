@@ -4,7 +4,11 @@ import dotenv from 'dotenv';
 import routes from './routes/routes';
 import fastifySession from '@fastify/session';
 import fastifyCookie from '@fastify/cookie';
-import fastifyCors from '@fastify/cors'; // Importa o plugin CORS
+import fastifyCors from '@fastify/cors';
+import fastifyMultipart from '@fastify/multipart';
+import fastifyStatic from '@fastify/static';
+import path from 'path';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -19,7 +23,7 @@ fastify.register(fastifyCors, {
 
 // Registra o plugin para cookies
 fastify.register(fastifyCookie);
-
+  
 // Registra o plugin para sessões
 fastify.register(fastifySession, {
     secret: process.env.SESSION_SECRET || 'your-secret-key', // Use a variável de ambiente
@@ -28,6 +32,21 @@ fastify.register(fastifySession, {
         maxAge: 1000 * 60 * 60 * 24 // 1 dia
     }
 });
+
+// Registra o plugin para uploads de arquivos
+fastify.register(fastifyMultipart);
+
+// Registra o plugin para servir arquivos estáticos
+fastify.register(fastifyStatic, {
+    root: path.join(__dirname, 'uploads'),
+    prefix: '/uploads/',
+});
+
+// Certifique-se de que o diretório 'uploads' existe
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // Registra as rotas
 fastify.register(routes);
@@ -41,11 +60,11 @@ mongoose.connect(dbUri)
     fastify.ready().then(() => {
       fastify.listen({ port }, (err, address) => {
         if (err) {
-          console.log('Erro ao iniciar o servidor:', err);
+          console.error('Erro ao iniciar o servidor:', err);
           process.exit(1);
         }
         console.log(`Server is running on ${address}`);
       });
     });
   })
-  .catch(e => console.log('Erro ao conectar ao MongoDB', e));
+  .catch(e => console.error('Erro ao conectar ao MongoDB', e));

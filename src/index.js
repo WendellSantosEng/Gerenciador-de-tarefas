@@ -9,7 +9,11 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const routes_1 = __importDefault(require("./routes/routes"));
 const session_1 = __importDefault(require("@fastify/session"));
 const cookie_1 = __importDefault(require("@fastify/cookie"));
-const cors_1 = __importDefault(require("@fastify/cors")); // Importa o plugin CORS
+const cors_1 = __importDefault(require("@fastify/cors"));
+const multipart_1 = __importDefault(require("@fastify/multipart"));
+const static_1 = __importDefault(require("@fastify/static"));
+const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 dotenv_1.default.config();
 const fastify = (0, fastify_1.default)();
 const port = 3000;
@@ -28,6 +32,18 @@ fastify.register(session_1.default, {
         maxAge: 1000 * 60 * 60 * 24 // 1 dia
     }
 });
+// Registra o plugin para uploads de arquivos
+fastify.register(multipart_1.default);
+// Registra o plugin para servir arquivos estáticos
+fastify.register(static_1.default, {
+    root: path_1.default.join(__dirname, 'uploads'),
+    prefix: '/uploads/',
+});
+// Certifique-se de que o diretório 'uploads' existe
+const uploadsDir = path_1.default.join(__dirname, 'uploads');
+if (!fs_1.default.existsSync(uploadsDir)) {
+    fs_1.default.mkdirSync(uploadsDir, { recursive: true });
+}
 // Registra as rotas
 fastify.register(routes_1.default);
 const dbUri = process.env.DATABASE || '';
@@ -38,11 +54,11 @@ mongoose_1.default.connect(dbUri)
     fastify.ready().then(() => {
         fastify.listen({ port }, (err, address) => {
             if (err) {
-                console.log('Erro ao iniciar o servidor:', err);
+                console.error('Erro ao iniciar o servidor:', err);
                 process.exit(1);
             }
             console.log(`Server is running on ${address}`);
         });
     });
 })
-    .catch(e => console.log('Erro ao conectar ao MongoDB', e));
+    .catch(e => console.error('Erro ao conectar ao MongoDB', e));

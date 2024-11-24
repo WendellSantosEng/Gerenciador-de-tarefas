@@ -9,10 +9,11 @@ const cookie_1 = __importDefault(require("@fastify/cookie"));
 const sessionMiddleware = (fastify) => {
     fastify.register(cookie_1.default);
     fastify.register(session_1.default, {
-        secret: 'your-secret-key',
-        cookie: { secure: false }, // Defina como true em produção
-        saveUninitialized: false,
-        resave: false
+        secret: process.env.SESSION_SECRET || 'your-secret-key', // Use a variável de ambiente
+        cookie: {
+            secure: process.env.NODE_ENV === 'production', // Usa secure apenas em produção
+            maxAge: 1000 * 60 * 60 * 24 // 1 dia
+        }
     });
 };
 exports.sessionMiddleware = sessionMiddleware;

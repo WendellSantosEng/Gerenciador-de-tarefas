@@ -52,7 +52,8 @@ const register = (request, reply) => __awaiter(void 0, void 0, void 0, function*
         const login = new LoginModel_1.default({
             iduser: uniqueId,
             email: request.body.email,
-            password: request.body.password
+            password: request.body.password,
+            name: request.body.name || request.body.email
         });
         yield login.register();
         if (login.errors.length > 0) {
@@ -81,7 +82,13 @@ const login = (request, reply) => __awaiter(void 0, void 0, void 0, function* ()
         }
         if (login.user) {
             // Armazena o ID e o email na sessão para fácil acesso em outras partes do sistema
-            request.session.user = { email: login.user.email, iduser: login.user.iduser }; // Agora iduser é reconhecido
+            const user = login.user;
+            request.session.user = {
+                email: user.email,
+                iduser: user.iduser,
+                name: user.name,
+                ownerId: user._id.toString(), // Agora TypeScript sabe que user tem um _id
+            };
             return reply.send({ success: 'Você entrou no sistema.' });
         }
         else {

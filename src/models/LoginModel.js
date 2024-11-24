@@ -43,12 +43,17 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const LoginSchema = new mongoose_1.Schema({
     iduser: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    name: { type: String, default: '' },
+    profilePic: { type: String },
 });
 // Modelo Mongoose
 const LoginModel = mongoose_1.default.model('Login', LoginSchema);
 exports.LoginModel = LoginModel;
 class Login {
+    static findOneAndUpdate(arg0, arg1, arg2) {
+        throw new Error('Method not implemented.');
+    }
     constructor(body) {
         this.body = body;
         this.errors = [];
@@ -82,6 +87,8 @@ class Login {
                 return;
             // Gera um ID único para o usuário
             this.body.iduser = yield generateUniqueId();
+            if (!this.body.name)
+                this.body.name = this.body.email;
             const salt = bcryptjs_1.default.genSaltSync();
             this.body.password = bcryptjs_1.default.hashSync(this.body.password, salt);
             this.user = yield LoginModel.create(this.body);
@@ -92,6 +99,30 @@ class Login {
             this.user = yield LoginModel.findOne({ email: this.body.email });
             if (this.user)
                 this.errors.push('Usuário já existe.');
+        });
+    }
+    update() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.errors.length > 0)
+                return;
+            this.valida();
+            if (this.errors.length > 0)
+                return;
+            // Verifica se o e-mail já está em uso
+            if (this.body.email) {
+                const existingUser = yield LoginModel.findOne({ email: this.body.email });
+                if (existingUser && existingUser.iduser !== this.body.iduser) {
+                    this.errors.push('E-mail já em uso.');
+                    return;
+                }
+            }
+            // Se a senha foi alterada, atualiza com hash
+            if (this.body.password) {
+                const salt = bcryptjs_1.default.genSaltSync();
+                this.body.password = bcryptjs_1.default.hashSync(this.body.password, salt);
+            }
+            // Atualiza o usuário no banco
+            this.user = yield LoginModel.findOneAndUpdate({ iduser: this.body.iduser }, this.body, { new: true });
         });
     }
     valida() {
@@ -109,18 +140,8 @@ class Login {
         if (this.body && typeof this.body === 'object') {
             const keys = Object.keys(this.body);
             for (const key of keys) {
-                if (typeof this.body[key] !== 'string') {
-                    this.body[key] = '';
-                }
+                this.body[key] = typeof this.body[key] === 'string' ? this.body[key] : '';
             }
-            this.body = {
-                iduser: this.body.iduser,
-                email: this.body.email,
-                password: this.body.password
-            };
-        }
-        else {
-            this.body = { iduser: '', email: '', password: '' };
         }
     }
 }

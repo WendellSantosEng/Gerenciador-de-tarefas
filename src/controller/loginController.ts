@@ -1,10 +1,19 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import Login, { LoginModel } from '../models/LoginModel';
+import { Types } from 'mongoose';
 
 interface LoginRequestBody {
     iduser?: string;  // Adicionando 'iduser' como opcional
     email: string;
     password: string;
+    name?: string;  // Adicionando 'name' como opcional
+}
+
+interface User {
+    _id: Types.ObjectId;
+    email: string;
+    iduser: string;
+    name: string;
 }
 
 export const index = async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
@@ -27,7 +36,8 @@ export const register = async (request: FastifyRequest<{ Body: LoginRequestBody 
         const login = new Login({
             iduser: uniqueId,
             email: request.body.email,
-            password: request.body.password
+            password: request.body.password,
+            name: request.body.name || request.body.email
         });
 
         await login.register();
@@ -40,7 +50,7 @@ export const register = async (request: FastifyRequest<{ Body: LoginRequestBody 
     } catch (e) {
         console.error(e);
         return reply.status(500).send({ error: 'Erro no servidor' });
-    }
+    }   
 };
 
 export const login = async (request: FastifyRequest<{ Body: LoginRequestBody }>, reply: FastifyReply): Promise<void> => {
@@ -61,7 +71,14 @@ export const login = async (request: FastifyRequest<{ Body: LoginRequestBody }>,
 
         if (login.user) {
             // Armazena o ID e o email na sessão para fácil acesso em outras partes do sistema
-            request.session.user = { email: login.user.email, iduser: login.user.iduser }; // Agora iduser é reconhecido
+            const user = login.user as User;
+            
+            request.session.user = {
+                email: user.email,
+                iduser: user.iduser,
+                name: user.name,
+                ownerId: user._id.toString(),  // Agora TypeScript sabe que user tem um _id
+            };
             return reply.send({ success: 'Você entrou no sistema.' });
         } else {
             return reply.code(400).send({ error: 'Falha ao fazer login, usuário não encontrado.' });
