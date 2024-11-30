@@ -1,70 +1,152 @@
-# Getting Started with Create React App
+# Projeto de Gerenciamento de Tarefas
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto é um gerenciador de tarefas inspirado no Trello, desenvolvido utilizando React no frontend e Node.js no backend. Ele permite a organização e acompanhamento de projetos pessoais e em equipe, oferecendo uma plataforma eficiente para gerenciamento de tarefas e colaboração em tempo real.
 
-## Available Scripts
+## Estrutura do Projeto
 
-In the project directory, you can run:
+```plaintext
+.dist/
+.gitignore
+build/
+public/
+src/
+  App.css
+  App.tsx
+  components/
+    Home/
+      Home.css
+      Home.tsx
+      ModalConfigUsuario.css
+      ModalConfigUsuario.tsx
+      Search.css
+      Search.tsx
+      svg/
+        svg.tsx
+    Login/
+      Login.css
+      Login.tsx
+    Perfil/
+      Perfil.css
+      Perfil.tsx
+  index.css
+  index.tsx
+  react-app-env.d.ts
+  Router/
+    routes.tsx
+tsconfig.json
+package.json
+README.md
+```
+
+## Funcionalidades
+
+### Home
+
+O componente principal da aplicação, onde os usuários podem visualizar e gerenciar suas tarefas e colunas.
+
+- **Home.tsx**: Contém a lógica principal para exibição e manipulação de colunas e tarefas.
+- **Home.css**: Estilos para o componente Home.
+- **ModalConfigUsuario.tsx**: Modal para configuração do usuário.
+- **ModalConfigUsuario.css**: Estilos para o modal de configuração do usuário.
+- **Search.tsx**: Componente de busca.
+- **Search.css**: Estilos para o componente de busca.
+- **svg/svg.tsx**: Ícones SVG utilizados na aplicação.
+
+### Login
+
+Componente de autenticação onde os usuários podem fazer login ou registrar-se.
+
+- **Login.tsx**: Lógica de autenticação.
+- **Login.css**: Estilos para o componente de login.
+
+### Perfil
+
+Componente onde os usuários podem visualizar e editar suas informações de perfil.
+
+- **Perfil.tsx**: Lógica para exibição e edição do perfil do usuário.
+- **Perfil.css**: Estilos para o componente de perfil.
+
+### Router
+
+Configuração das rotas da aplicação.
+
+- **routes.tsx**: Define as rotas e a lógica de navegação da aplicação.
+
+## Instalação
+
+1. Clone o repositório:
+   ```sh
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+   ```
+2. Navegue até o diretório do projeto:
+   ```sh
+   cd seu-repositorio
+   ```
+3. Instale as dependências:
+   ```sh
+   npm install
+   ```
+
+## Scripts Disponíveis
+
+No diretório do projeto, você pode executar:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Executa a aplicação em modo de desenvolvimento.\
+Abra [http://localhost:3000](http://localhost:3000) para visualizá-la no navegador.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Inicia o executor de testes no modo interativo.\
+Veja a seção sobre [testes](https://facebook.github.io/create-react-app/docs/running-tests) para mais informações.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Compila a aplicação para produção na pasta 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+build
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+.\
+Agrupa corretamente o React no modo de produção e otimiza a compilação para o melhor desempenho.
 
 ### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Nota: esta é uma operação sem retorno. Uma vez que você `eject`, você não pode voltar!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Se você não estiver satisfeito com a ferramenta de construção e as escolhas de configuração, você pode `eject` a qualquer momento. Este comando removerá a dependência única de construção do seu projeto.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Configuração do Projeto
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 
 
-## Learn More
+tsconfig.json
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+Configurações do compilador TypeScript.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 
 
-### Analyzing the Bundle Size
+.gitignore
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Arquivos e diretórios a serem ignorados pelo Git.
 
-### Advanced Configuration
+## Dependências
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **React**: Biblioteca para construção de interfaces de usuário.
+- **Axios**: Cliente HTTP baseado em Promises para o navegador e Node.js.
+- **Bootstrap**: Framework CSS para desenvolvimento de interfaces responsivas.
+- **React Router DOM**: Biblioteca para controle de rotas no React.
+- **Material UI**: Biblioteca de componentes React para um desenvolvimento ágil e estiloso.
 
-### Deployment
+## Contato
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Desenvolvido por Wendell Santos.\
+Para mais informações, entre em contato: wendellsdev@gmail.com.
 
-### `npm run build` fails to minify
+## Licença
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Este projeto é licenciado sob os termos da licença MIT.
