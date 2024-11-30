@@ -1,6 +1,13 @@
 # Projeto de Gerenciamento de Tarefas
 
-Este projeto é um gerenciador de tarefas inspirado no Trello, desenvolvido utilizando React no frontend e Node.js no backend. Ele permite a organização e acompanhamento de projetos pessoais e em equipe, oferecendo uma plataforma eficiente para gerenciamento de tarefas e colaboração em tempo real.
+![GitHub repo size](https://img.shields.io/github/repo-size/WendellSantosEng/Gerenciador-de-tarefas)
+![GitHub top language](https://img.shields.io/github/languages/top/WendellSantosEng/Gerenciador-de-tarefas)
+![GitHub last commit](https://img.shields.io/github/last-commit/WendellSantosEng/Gerenciador-de-tarefas)
+![GitHub issues](https://img.shields.io/github/issues/WendellSantosEng/Gerenciador-de-tarefas)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/WendellSantosEng/Gerenciador-de-tarefas)
+![GitHub](https://img.shields.io/github/license/WendellSantosEng/Gerenciador-de-tarefas)
+
+Este projeto é um gerenciador de tarefas inspirado no Trello, desenvolvido utilizando React no frontend e Node.js no backend. Ele permite a organização e acompanhamento de projetos pessoais e em equipe.
 
 ## Estrutura do Projeto
 
@@ -93,21 +100,17 @@ No diretório do projeto, você pode executar:
 
 ### `npm start`
 
-Executa a aplicação em modo de desenvolvimento.\
+Executa a aplicação em modo de desenvolvimento.
 Abra [http://localhost:3000](http://localhost:3000) para visualizá-la no navegador.
 
 ### `npm test`
 
-Inicia o executor de testes no modo interativo.\
+Inicia o executor de testes no modo interativo.
 Veja a seção sobre [testes](https://facebook.github.io/create-react-app/docs/running-tests) para mais informações.
 
 ### `npm run build`
 
-Compila a aplicação para produção na pasta 
-
-build
-
-.\
+Compila a aplicação para produção na pasta `build`.
 Agrupa corretamente o React no modo de produção e otimiza a compilação para o melhor desempenho.
 
 ### `npm run eject`
@@ -118,19 +121,11 @@ Se você não estiver satisfeito com a ferramenta de construção e as escolhas 
 
 ## Configuração do Projeto
 
-### 
-
-tsconfig.json
-
-
+### `tsconfig.json`
 
 Configurações do compilador TypeScript.
 
-### 
-
-.gitignore
-
-
+### `.gitignore`
 
 Arquivos e diretórios a serem ignorados pelo Git.
 
@@ -144,7 +139,7 @@ Arquivos e diretórios a serem ignorados pelo Git.
 
 ## Contato
 
-Desenvolvido por Wendell Santos.\
+Desenvolvido por Wendell Santos.
 Para mais informações, entre em contato: wendellsdev@gmail.com.
 
 ## Licença
