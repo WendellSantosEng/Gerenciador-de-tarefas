@@ -11,7 +11,6 @@
 ![Nodemon](https://img.shields.io/badge/Nodemon-76d04b?style=flat&logo=nodemon&logoColor=white)
 ![dotenv](https://img.shields.io/badge/dotenv-e9b44c?style=flat&logo=dotenv&logoColor=white)
 ![bcrypt](https://img.shields.io/badge/bcrypt-3498db?style=flat&logo=bcrypt&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=flat&logo=json-web-tokens&logoColor=white)
 
 ## Instalação
 1. Clone o repositório:
