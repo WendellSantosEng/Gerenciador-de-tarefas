@@ -1,0 +1,103 @@
+.titulo-cores {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--section1-color-1);
+}
+
+.titulo-cores-secao2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--section2-color-3);
+    margin-top: 20px;
+}
+
+.modal-body {
+    padding: 30px 40px;
+}
+
+.modal-config {
+    position: fixed;
+    top: 0;
+    left: -100%; 
+    width: 500px;
+    height: 100%;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s ease; 
+    z-index: 1000;
+}
+
+.modal-config.open {
+    left: 0; 
+}
+
+.modal-content-config {
+    padding: 20px;
+    height: 90%;
+}
+
+.close-button-config {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.cabecalho-modal {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--section1-color-2);
+}
+
+.info-user-text {
+    margin: 0px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.botoes-modal {
+    height: 60px;
+    border-radius: 10px;
+    background: var(--section1-color-1);
+}
+
+.texto-botao-modal-config {
+    color: white;
+    font-size: 20px;
+}
+
+.botoes-modal:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.cor-bolinha {
+    display: inline-block;
+    margin: 5px;
+}
+
+.color-picker {
+    position: relative;
+    margin-top: 10px;
+}
+
+.box-cores{
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 50px;
+    margin: 20px 0px;
+    background: gainsboro;
+}
+
+.about-config{
+    border: 1px solid;
+    padding: 20px;
+    border-radius: 30px;
+}

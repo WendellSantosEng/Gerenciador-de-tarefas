@@ -1,27 +1,22 @@
-.topo-login{
-    height: 100px;
-    width: 100%;
-    background-color: #A0AEC0;
-    margin-bottom: 100px;
-}
-
 .login-div {
-    padding: 50px 120px 120px;
-    background: #00B5D8;
+    padding: 30px 50px 50px;
+    background: #1c1e1f;
     color: #FFF;
+    text-align: center;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
+    width: 600px;
+    transition: background-color 0.3s ease;
 }
 
 .title-login{
-    text-transform: uppercase;
     font-size: 55px;
     margin-bottom: 45px;
     font-family: "Karla", sans-serif;
     font-weight: 700;
     font-style: normal;
 }
-
+ 
 .email-div,
 .password-div{
     margin-bottom: 30px;
@@ -36,7 +31,8 @@ input {
     font-family: "Karla", sans-serif;
     font-size: 18px;
     padding: 20px;
-    height: 60px;
+    height: 50px;
+    margin: 10px 0px 0px;
     border-radius: 20px;
     border: 1px solid #000;
 }
@@ -67,4 +63,118 @@ label{
 
 .botao-login button:hover {
     background-color: #4A5568;
+}
+
+.half-ball-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+}
+
+.half-ball-container.left .half-ball {
+    transform: translateX(-45%);
+}
+
+.half-ball-container.right .half-ball {
+    transform: translateX(45%);
+}
+
+.half-ball {
+    position: absolute;
+    width: 200vh;
+    height: 200vh;
+    border-radius: 50%;
+    bottom: -15%;
+    background-color: black;
+    transition: transform 0.5s ease-in-out, background-color 0.3s ease;
+}
+
+/* Centralização do botão */
+.toggle-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza o botão verticalmente */
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, left 0.5s ease;
+    border: none;
+    outline: none;
+    padding: 22px;
+    border-radius: 40px;
+    width: 20%;
+    font-size: 26px;
+}
+
+.text-login-or-register {
+    position: absolute;
+    top: 38%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease, left 0.5s ease;
+    font-size: 32px;
+}
+
+/* Quando a bola estiver na esquerda */
+.half-ball-container.left .toggle-button {
+    left: 10%;
+    background-color: #FFF;
+    color: #000;
+}
+
+.half-ball-container.left .text-login-or-register {
+    left: 12%; /* O mesmo que o botão */
+    color: #ffffff;
+}
+
+/* Quando a bola estiver na direita */
+.half-ball-container.right .toggle-button {
+    left: 70%; /* O botão move para 70% */
+    background-color: darkblue;
+    color: #FFF;
+}
+
+.half-ball-container.right .text-login-or-register {
+    left: 72%; /* O texto move para 70% junto com o botão */
+    color: #000000; /* Altere a cor conforme necessário */
+}
+
+.toggle-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.login-buttons {
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Estilos para a seção de login */
+.secao-login {
+    background-color: white;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilos para a login-div */
+.login-div {
+    background-color: darkblue;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+/* Quando a bola estiver na direita */
+.secao-login.right {
+    background-color: darkblue;
+}
+
+.secao-login.right .login-div {
+    background-color: black;
+    color: white;
+}
+
+.half-ball-container.right .half-ball {
+    background-color: white;
 }

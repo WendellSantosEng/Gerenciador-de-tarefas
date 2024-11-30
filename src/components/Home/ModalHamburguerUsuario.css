@@ -1,0 +1,159 @@
+.modal-body {
+    padding: 30px 40px;
+    height: 95%;
+}
+
+.modal-hamburguer {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Inicialmente fora da tela à esquerda */
+    width: 400px;
+    height: 100%;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s ease; /* Transição para a propriedade 'left' */
+    z-index: 1000;
+}
+
+.modal-hamburguer.open {
+    left: 0; /* Move o modal para dentro da tela */
+}
+
+.modal-content-hamburguer {
+    padding: 20px;
+}
+
+.close-button-hamburguer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.cabecalho-modal {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--section1-color-2);
+}
+
+.avatar {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 50%;
+}
+
+.info-user {
+    padding: 15px 0px 25px;
+}
+
+.info-user-text {
+    font-size: 20px;
+    color: #000;
+}
+
+.info-user-text {
+    margin: 0px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.botoes-modal {
+    height: 60px;
+    border-radius: 10px;
+    background: var(--section1-color-1);
+}
+
+.texto-botao-modal-hamburguer {
+    color: white;
+    font-size: 20px;
+}
+
+.botoes-modal:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.dropdown-calendar {
+    margin-top: 10px;
+}
+
+.task-indicator {
+    width: 8px;
+    height: 8px;
+    background-color: #ff8507;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.task-message {
+    margin-top: 10px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.boards-dropdown{
+    font-size: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.projetos-title{
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.seta-icon {
+    transition: transform 0.3s ease; /* Transição suave */
+}
+
+.seta-icon.rotated {
+    transform: rotate(90deg); /* Gira 90 graus */
+}
+
+.board-item{
+    transition: all 0.3s ease;
+}
+
+.board-item:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.botao-create-board{
+    background-color: #058d1c;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 20px;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.botao-create-board:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.botao-cancelar-create{
+    background-color: #df4c27;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 20px;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.botao-cancelar-create:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}

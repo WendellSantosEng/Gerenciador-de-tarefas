@@ -37,7 +37,7 @@
     justify-content: start;
     align-items: center;
     padding: 10px;
-    background-color: #1E3A5F;
+    background-color: var(--section1-color-2);
 }
 
 .avatar{
@@ -50,7 +50,7 @@
     padding: 15px 0px 25px;
     &-text{
         font-size: 20px;
-        color: #1E3A5F;
+        color: var(--section1-color-2);
     }
 }
 
@@ -64,7 +64,7 @@
 .sair-button{
     height: 60px;
     border-radius: 10px;
-    background: #A0AEC0;
+    background: var(--section1-color-1);
     .texto-botao-modal-user{
         color: white;
         font-size: 20px;

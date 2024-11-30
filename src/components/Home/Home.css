@@ -1,4 +1,96 @@
 header{
-    background-color: #A0AEC0;
+    position: relative;
+    background-color: var(--section1-color-1);
     padding: 20px;
+    width: 100%;
+}
+
+.section-home {
+    width: 100vw; /* Ocupa toda a largura da tela */
+    height: 100vh; /* Ocupa toda a altura da tela */
+    background-color: var(--section1-color-2);
+    padding: 20px; /* Espaçamento interno opcional */
+    box-sizing: border-box; /* Inclui padding e border no tamanho total */
+}
+
+.barra-pesquisa{
+    width: 100%;
+    background-color: #fff;
+    border-radius: 50px;
+    border: 3px solid #000;
+    padding: 0px 10px 5px;
+}
+
+.input-filter{
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-bottom: 3px solid #000;
+    font-size: 18px;
+    margin: 0px 10px;
+}
+
+.board-name-top{
+    font-size: 36px;
+}
+
+.board-details {
+    height: 100%;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.column {
+    height: min-content;
+    background-color: #f8f9fa; /* Cor de fundo para a coluna */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.column h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #343a40;
+}
+
+.task {
+    background-color: #ffffff; /* Fundo do card */
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.task p {
+    margin: 0;
+    color: #495057;
+}
+
+.text-area-description-task{
+    width: 94%;
+    border: 1px solid #CCC;
+    border-radius: 15px;
+}
+
+.select-status-task{
+    border: none;
+    background: #4143d8;
+    padding: 8px;
+    color: #FFF;
+    border-radius: 20px;
 }

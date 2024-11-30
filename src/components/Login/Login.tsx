@@ -67,76 +67,93 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
         }
     };
 
-    return (
-        <section className='secao-login'>
-            <div className="topo-login"></div>
-            <div className="container-fluid">
-                <div className="row justify-content-around">
-                    {/* Formulário de Login */}
-                    <div className="col-5">
-                        <form onSubmit={handleLoginSubmit}>
-                            <div className="login-div d-flex flex-column">
-                                <p className='title-login'>Faça login</p>
-                                <div className='email-div'>
-                                    <label>Email:</label>
-                                    <input 
-                                        className='w-100 input-login'
-                                        type="email" 
-                                        value={email} 
-                                        onChange={(e) => setEmail(e.target.value)} 
-                                    />
-                                </div>
-                                <div className='password-div'>
-                                    <label>Password:</label>
-                                    <input 
-                                        className='w-100 input-login'
-                                        type="password" 
-                                        value={password} 
-                                        onChange={(e) => setPassword(e.target.value)} 
-                                    />
-                                </div>
-                            </div>
-                            <div className="row d-flex justify-content-center">
-                                <div className="botao-login col-6 mt-4">
-                                    <button type="submit">ENTRAR</button>
-                                </div>
-                            </div>
-                            {errorMessage && <div className="text-danger">{errorMessage}</div>}
-                        </form>
-                    </div>
+    const [position, setPosition] = useState<'left' | 'right'>('left');
 
-                    {/* Formulário de Registro */}
-                    <div className="col-5">
-                        <form onSubmit={handleRegisterSubmit}>
-                            <div className="login-div d-flex flex-column">
-                                <p className='title-login'>Crie uma conta</p>
-                                <div className='email-div'>
-                                    <label>Email:</label>
-                                    <input 
-                                        className='w-100 input-login'
-                                        type="email" 
-                                        value={registerEmail} 
-                                        onChange={(e) => setRegisterEmail(e.target.value)} 
-                                    />
-                                </div>
-                                <div className='password-div'>
-                                    <label>Password:</label>
-                                    <input 
-                                        className='w-100 input-login'
-                                        type="password" 
-                                        value={registerPassword} 
-                                        onChange={(e) => setRegisterPassword(e.target.value)} 
-                                    />
-                                </div>
-                            </div>
-                            <div className="row d-flex justify-content-center">
-                                <div className="botao-login col-6 mt-4">
-                                    <button type="submit">CRIAR CONTA</button>
-                                </div>
-                            </div>
+    const togglePosition = () => {
+        setPosition((prevPosition) => (prevPosition === 'left' ? 'right' : 'left'));
+    };
+
+    return (
+        <section className={`secao-login ${position === 'right' ? 'right' : ''}`}>
+            <div className={`half-ball-container ${position}`}> 
+                <div className="half-ball"></div>
+                <div className="text-login-or-register">
+                    {position === 'left' ? 'Ja possui uma conta?' : 'Não tem uma conta?'}
+                </div>
+                <button className="toggle-button" onClick={togglePosition}>
+                    {position === 'left' ? 'Fazer login' : 'Registre-se'}
+                </button>
+            
+                {/* <div className="topo-login"></div> */}
+                <div className="container-fluid">
+                    <div className="row justify-content-around">
+                        {/* Formulário de Login */}
+                        <div className="col-4">
                             {errorMessage && <div className="text-danger">{errorMessage}</div>}
                             {successMessage && <div className="text-success">{successMessage}</div>}
-                        </form>
+                            <form onSubmit={handleLoginSubmit}>
+                                <div className="login-div d-flex flex-column">
+                                    <p className='title-login'>Faça login</p>
+                                    <div className='email-div d-flex flex-column align-items-start'>
+                                        <label>Email:</label>
+                                        <input 
+                                            className='w-100 input-login'
+                                            type="email" 
+                                            value={email} 
+                                            onChange={(e) => setEmail(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div className='password-div d-flex flex-column align-items-start'>
+                                        <label>Senha:</label>
+                                        <input 
+                                            className='w-100 input-login'
+                                            type="password" 
+                                            value={password} 
+                                            onChange={(e) => setPassword(e.target.value)} 
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row d-flex justify-content-center">
+                                    <div className="botao-login col-6 mt-4">
+                                        <button type="submit">ENTRAR</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        {/* Formulário de Registro */}
+                        <div className="col-5 d-flex justify-content-end">
+                        {errorMessage && <div className="text-danger">{errorMessage}</div>}
+                        {successMessage && <div className="text-success">{successMessage}</div>}
+                            <form onSubmit={handleRegisterSubmit}>
+                                <div className="login-div d-flex flex-column">
+                                    <p className='title-login'>Crie uma conta</p>
+                                    <div className='email-div d-flex flex-column align-items-start'>
+                                        <label>Email:</label>
+                                        <input 
+                                            className='w-100 input-login'
+                                            type="email" 
+                                            value={registerEmail} 
+                                            onChange={(e) => setRegisterEmail(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div className='password-div d-flex flex-column align-items-start'>
+                                        <label>Senha:</label>
+                                        <input 
+                                            className='w-100 input-login'
+                                            type="password" 
+                                            value={registerPassword} 
+                                            onChange={(e) => setRegisterPassword(e.target.value)} 
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row d-flex justify-content-center">
+                                    <div className="botao-login col-6 mt-4">
+                                        <button type="submit">CRIAR CONTA</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
