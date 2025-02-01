@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import './ModalHamburguerUsuario.css';
-import { IconeFechar, IconeCalendario, IconeConfig, IconePojetos, IconeSeta } from './svg/svg';
-import Calendar, { CalendarProps } from 'react-calendar';
+import { IconeSeta } from './svg/svg';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { ModalConfigUsuario } from './ModalConfigUsuario';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -134,11 +132,6 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
             setSelectedTaskMessage(null);
             setSelectedTaskDate(null);
         }
-    };
-
-    const handleDateChange: CalendarProps['onChange'] = (value) => {
-        setDate(value as Date);
-        handleTileClick(value as Date); // Atualiza a mensagem da tarefa ao mudar a data
     };
 
     const handleTileClick = (date: Date) => {

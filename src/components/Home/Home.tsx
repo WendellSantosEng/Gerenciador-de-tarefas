@@ -5,14 +5,11 @@ import './svg/svg';
 import { IconeMenu, IconeUsuario } from './svg/svg';
 import { ModalUsuario } from './ModalUsuario';
 import { ModalHamburguerUsuario } from './ModalHamburguerUsuario';
-import { Search } from './Search';
 import './Home.css';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import DeleteIcon from '@mui/icons-material/Delete';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { click } from '@testing-library/user-event/dist/click';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 
 interface Item {
