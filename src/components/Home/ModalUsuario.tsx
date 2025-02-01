@@ -26,7 +26,7 @@ export const ModalUsuario: React.FC<ModalUsuarioProps> = ({ isOpen, onClose, use
 
     const handleLogout = async () => {
         try {   
-            const response = await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
+            const response = await axios.post('http://206.189.179.210/logout', {}, { withCredentials: true });
             console.log(response.data.success); 
             window.location.href = '/login'; 
         } catch (error) {
@@ -37,7 +37,7 @@ export const ModalUsuario: React.FC<ModalUsuarioProps> = ({ isOpen, onClose, use
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user', { withCredentials: true });
+                const response = await axios.get('http://206.189.179.210/user', { withCredentials: true });
                 setUser(response.data);
             } catch (error) {
                 console.error('Erro ao buscar dados do usuário:', error);

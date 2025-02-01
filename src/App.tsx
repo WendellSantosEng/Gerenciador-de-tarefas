@@ -11,7 +11,8 @@ const App: React.FC = () => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/session', { withCredentials: true });
+        // const response = await axios.get('http://206.189.179.210/session', { withCredentials: true });
+        const response = await axios.get('http://206.189.179.210/session', { withCredentials: true });
         if (response.data.user) {
           setIsAuthenticated(true);
         } else {

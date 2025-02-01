@@ -23,7 +23,7 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
         
         try {
             const response = await axios.post(
-                'http://localhost:3000/login', 
+                'http://206.189.179.210/login',
                 { email, password },
                 { 
                     headers: { 'Content-Type': 'application/json' },
@@ -52,7 +52,7 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
 
         try {
             const response = await axios.post(
-                'http://localhost:3000/register', 
+                'http://206.189.179.210/register', 
                 { email: registerEmail, password: registerPassword },
                 { 
                     headers: { 'Content-Type': 'application/json' },

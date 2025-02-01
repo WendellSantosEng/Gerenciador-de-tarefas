@@ -63,7 +63,7 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user', { withCredentials: true });
+                const response = await axios.get('http://206.189.179.210/user', { withCredentials: true });
                 setUser(response.data);
                 console.log('Dados do usuário:', response.data);
             } catch (error) {
@@ -87,8 +87,8 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
                 }
             
                 const [projectsResponse, boardsResponse] = await Promise.all([
-                    axios.get('http://localhost:3000/main-projects'),
-                    axios.get('http://localhost:3000/boards'),
+                    axios.get('http://206.189.179.210/main-projects'),
+                    axios.get('http://206.189.179.210/boards'),
                 ]);
             
                 let projects = projectsResponse.data;
@@ -182,7 +182,7 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
             console.log('Projeto selecionado:', selectedProjectId);
             try {
                 // Crie a board no servidor
-                const response = await axios.post('http://localhost:3000/boards', {
+                const response = await axios.post('http://206.189.179.210/boards', {
                     name: newBoardName,
                     mainProjectId: selectedProjectId,
                 });
@@ -223,7 +223,7 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
             try {
                 // Criação do projeto no servidor
                 const response = await axios.post(
-                    'http://localhost:3000/main-projects', 
+                    'http://206.189.179.210/main-projects', 
                     { name: newProjectName },
                     { withCredentials: true }
                 );
@@ -254,7 +254,7 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
         console.log('Deletando projeto:', projectId);
         try {
             // Deletar o projeto no servidor
-            await axios.delete(`http://localhost:3000/main-project/${projectId}`, { withCredentials: true });
+            await axios.delete(`http://206.189.179.210/main-project/${projectId}`, { withCredentials: true });
 
             // Atualizar a lista de projetos
             setProjectsWithBoards((prevProjects) => prevProjects.filter((project) => project._id !== projectId));
@@ -276,7 +276,7 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
         console.log('Deletando board:', boardId);
         try {
             // Deletar a board no servidor
-            await axios.delete(`http://localhost:3000/boards/${boardId}`, {
+            await axios.delete(`http://206.189.179.210/boards/${boardId}`, {
                 data: { mainProjectId: selectedProjectId },
                 withCredentials: true
             });

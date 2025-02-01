@@ -29,7 +29,7 @@ export const PerfilUser: React.FC = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user', { withCredentials: true });
+                const response = await axios.get('http://206.189.179.210/user', { withCredentials: true });
                 setUser(response.data);
                 setNome(response.data.name); // Atualiza o nome inicial
                 setEmail(response.data.email); // Atualiza o email inicial
@@ -56,7 +56,7 @@ export const PerfilUser: React.FC = () => {
             };
 
             // Enviar apenas os dados de usuário sem a imagem para /user/update
-            const response = await axios.put('http://localhost:3000/user/update', updatedUser, { withCredentials: true });
+            const response = await axios.put('http://206.189.179.210/user/update', updatedUser, { withCredentials: true });
 
             if (response.data.success) {
                 alert('Dados atualizados com sucesso!');
@@ -84,7 +84,7 @@ export const PerfilUser: React.FC = () => {
     const handlehome = () => navigate('/');
 
     // Exibe imagem de perfil do usuário ou padrão se não houver
-    const userImage = user?.image ? `http://localhost:3000/uploads/${user.image}` : "https://www.w3schools.com/w3images/avatar2.png";
+    const userImage = user?.image ? `http://206.189.179.210/uploads/${user.image}` : "https://www.w3schools.com/w3images/avatar2.png";
 
     return (
         <div>
