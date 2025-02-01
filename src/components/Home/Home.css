@@ -13,6 +13,12 @@ header{
     box-sizing: border-box; /* Inclui padding e border no tamanho total */
 }
 
+.iconeuser:hover{
+    svg{
+        cursor: pointer;
+    }	
+}
+
 .barra-pesquisa{
     width: 100%;
     background-color: #fff;
@@ -32,6 +38,9 @@ header{
 }
 
 .board-name-top{
+    font-family: "Karla", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
     font-size: 36px;
 }
 
@@ -85,12 +94,32 @@ header{
     width: 94%;
     border: 1px solid #CCC;
     border-radius: 15px;
+    min-height: 200px;
 }
 
 .select-status-task{
     border: none;
     background: #4143d8;
-    padding: 8px;
+    padding: 8px 20px;
     color: #FFF;
     border-radius: 20px;
+}
+
+.botao-salvar-edit{
+    background: #4143d8;
+    color: #FFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+
+.botao-cancelar-edit{
+    background: #FF0000;
+    color: #FFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
 }

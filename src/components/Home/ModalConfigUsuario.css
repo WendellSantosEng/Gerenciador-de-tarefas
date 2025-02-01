@@ -48,6 +48,12 @@
     cursor: pointer;
 }
 
+.svg-fechar-icon{
+    svg{    
+        padding: 10px;
+    }
+}
+
 .cabecalho-modal {
     display: flex;
     justify-content: start;
@@ -66,17 +72,19 @@
     height: 60px;
     border-radius: 10px;
     background: var(--section1-color-1);
+    border: 1px solid var(--section1-color-3);
 }
 
-.texto-botao-modal-config {
-    color: white;
-    font-size: 20px;
-}
-
-.botoes-modal:hover {
+/* .texto-botao-modal-user:hover {
     cursor: pointer;
     opacity: 0.8;
-}
+} */
+
+/* .ver-perfil-button:hover,
+.sair-button:hover {
+    cursor: pointer;
+    opacity: 0.6;
+} */
 
 .cor-bolinha {
     display: inline-block;

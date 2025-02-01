@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { IconeHome } from "./svg/svg";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { TextField, Button } from '@mui/material';
+import Avatar from 'react-avatar';
 
 interface User {
     email: string;
@@ -78,52 +79,7 @@ export const PerfilUser: React.FC = () => {
             alert('Erro ao atualizar os dados.');
         }
     };
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setImagem(e.target.files[0]);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                if (reader.result) {
-                    setImagemPreview(reader.result as string); // Exibe a pré-visualização da imagem
-                }
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        }
-    };
-
-    const handleImageUpload = async () => {
-        if (imagem) {
-            try {
-                const formData = new FormData();
-                formData.append('profilePic', imagem); // Certifique-se de que o nome do campo corresponde ao esperado no backend
     
-                const response = await axios.post('http://localhost:3000/upload-profile-pic', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data', // Definir o tipo correto de conteúdo
-                    }
-                });
-    
-                if (response.data.success) {
-                    alert('Imagem carregada com sucesso!');
-                    setUser(prevUser => ({
-                        ...prevUser!,
-                        image: response.data.profilePic // Supondo que a URL da imagem seja retornada no campo 'profilePic'
-                    }));
-                } else {
-                    alert('Erro ao carregar a imagem.');
-                }
-            } catch (error) {
-                console.error('Erro ao enviar a imagem:', error);
-                alert('Erro ao carregar a imagem.');
-            }
-        } else {
-            alert('Por favor, selecione uma imagem para enviar.');
-        }
-    };
-    
-    
-
     const navigate = useNavigate();
     const handlehome = () => navigate('/');
 
@@ -142,18 +98,19 @@ export const PerfilUser: React.FC = () => {
                 <div className="row">
                     <div className="col-12 d-flex justify-content-center">
                         <div className="box">
-                            <div className="image-user">
-                                {imagemPreview ? (
+                            <div className="image-user d-flex justify-content-center">
+                                {/* {imagemPreview ? (
                                     <img src={imagemPreview} alt="Pré-visualização da imagem" className="img-thumbnail" />
                                 ) : (
                                     <img src={userImage} alt="Imagem de perfil" className="img-thumbnail" />
-                                )}
-                                <div className="botao-pra-subir-imagem">
+                                )} */}
+                                {/* <div className="botao-pra-subir-imagem">
                                     <input type="file" accept="image/*" onChange={handleImageChange} />
                                     <Button variant="contained" color="secondary" onClick={handleImageUpload}>
                                         Enviar Imagem
                                     </Button>
-                                </div>
+                                </div> */}
+                                <Avatar round="50%" name={user?.name} />
                             </div>
                             <div className="box-body">
                                 <div className="row">   

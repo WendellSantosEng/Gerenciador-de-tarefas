@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState }  from "react";
 import axios from "axios";
 import './ModalUsuario.css';
 import { IconeFechar, IconeOlho, IconeSair } from './svg/svg';
+import Avatar from 'react-avatar';
 
 interface ModalUsuarioProps {
     isOpen: boolean;
@@ -10,7 +11,18 @@ interface ModalUsuarioProps {
     userId: string;
 }
 
+interface User {
+    email: string;
+    iduser: string;
+    password: string;
+    name: string;
+    image?: string;
+}
+
+
 export const ModalUsuario: React.FC<ModalUsuarioProps> = ({ isOpen, onClose, userName, userId }) => {
+
+    const [user, setUser] = useState<User | null>(null);
 
     const handleLogout = async () => {
         try {   
@@ -22,6 +34,19 @@ export const ModalUsuario: React.FC<ModalUsuarioProps> = ({ isOpen, onClose, use
         }
     }; 
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/user', { withCredentials: true });
+                setUser(response.data);
+            } catch (error) {
+                console.error('Erro ao buscar dados do usuário:', error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
     const handlePerfil = () => {
         window.location.href = '/perfil';
     }
@@ -29,24 +54,24 @@ export const ModalUsuario: React.FC<ModalUsuarioProps> = ({ isOpen, onClose, use
     return(
         <div className={`modal-usuario ${isOpen ? 'open' : ''}`}>
             <div className="cabecalho-modal">
-                <div onClick={onClose}>
+                <div className="svg-fechar-icon" onClick={onClose}>
                     <IconeFechar /> 
                 </div>
             </div>
             <div className="modal-body">
                 <div className="d-flex justify-content-center">
-                    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" className="avatar" />
+                    <Avatar round="50%" name={user?.name} />
                 </div>
                 <div className="d-flex flex-column align-items-center info-user">
                     <p className="info-user-text">ID: {userId}</p>
                     <p className="info-user-text">USUARIO: {userName}</p>
                 </div>
-                <div className="botoes-modal">
-                    <div onClick={handlePerfil} className="ver-perfil-button p-1 px-3 d-flex align-items-center mb-4">
+                <div className="botoes-modal2">
+                    <div onClick={handlePerfil} id="ver-perfil-button" className=" p-1 px-3 d-flex align-items-center mb-4">
                         <IconeOlho />
                         <p className="texto-botao-modal-user mx-3 mb-0">VER PERFIL</p>
                     </div>
-                    <div onClick={handleLogout} className="sair-button p-2 px-3 d-flex align-items-center">
+                    <div onClick={handleLogout} id="sair-button" className=" p-2 px-3 d-flex align-items-center">
                         <IconeSair />
                         <p className="texto-botao-modal-user mx-3 mb-0">SAIR</p>
                     </div>

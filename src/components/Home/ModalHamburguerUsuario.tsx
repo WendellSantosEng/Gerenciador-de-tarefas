@@ -22,6 +22,7 @@ interface Task {
 }
 
 interface User {
+    ownerId: string;
     email: string;
     iduser: string;
 }
@@ -35,6 +36,7 @@ interface Board {
 interface ProjectWithBoards {
     _id: string;
     name: string;
+    ownerId : string;
     boards: Board[];
 }
 
@@ -54,8 +56,8 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
     const [isCreatingProject, setIsCreatingProject] = useState(false);
 
     const [tasks, setTasks] = useState<Task[]>([
-        { date: new Date(2024, 10, 15), message: "Reunião importante" },
-        { date: new Date(2024, 10, 20), message: "Entrega do projeto" },
+        { date: new Date(2025, 1, 10), message: "Reunião importante" },
+        { date: new Date(2025, 1, 11), message: "Entrega do projeto" },
     ]);
 
     useEffect(() => {
@@ -63,35 +65,64 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
             try {
                 const response = await axios.get('http://localhost:3000/user', { withCredentials: true });
                 setUser(response.data);
+                console.log('Dados do usuário:', response.data);
             } catch (error) {
-                console.error('Erro ao buscar dados do usuário:', error);
+                if (axios.isAxiosError(error)) {
+                    console.error('Erro ao buscar dados do usuário:', error.response || error.message);
+                } else {
+                    console.error('Erro ao buscar dados do usuário:', error);
+                }
             }
         };
 
-        const fetchProjectsAndBoards = async () => {
+        fetchUserData();
+    }, []);
+
+    useEffect(() => {
+        const fetchProjectsAndBoards = async (userId: any) => {
             try {
+                if (!userId) {
+                    console.error('Usuário não encontrado!');
+                    return;
+                }
+            
                 const [projectsResponse, boardsResponse] = await Promise.all([
                     axios.get('http://localhost:3000/main-projects'),
                     axios.get('http://localhost:3000/boards'),
                 ]);
-
-                const projects = projectsResponse.data;
+            
+                let projects = projectsResponse.data;
                 const boards = boardsResponse.data;
-
-                const projectsWithBoards = projects.map((project: any) => ({
-                    ...project,
-                    boards: boards.filter((board: Board) => board.mainProjectId === project._id),
-                }));
-
+            
+                // Filtra os projetos para exibir apenas os que pertencem ao usuário logado
+                projects = projects.filter((project: any) => {
+                    const isOwner = project.ownerId === user?.ownerId;
+                    return isOwner;
+                });
+            
+                console.log('Projetos filtrados para o usuário:', projects);
+            
+                const projectsWithBoards = projects.map((project: any) => {
+                    const filteredBoards = boards.filter((board: any) => board.mainProjectId === project._id);
+                    return {
+                        ...project,
+                        boards: filteredBoards,
+                    };
+                });
+            
                 setProjectsWithBoards(projectsWithBoards);
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
             }
         };
 
-        fetchUserData();
-        fetchProjectsAndBoards();
-    }, []);
+        // Quando o usuário é carregado, chama a função para buscar projetos e boards
+        if (user && user.iduser) {
+            fetchProjectsAndBoards(user.iduser);
+        }
+    }, [user]); // Esse useEffect vai rodar toda vez que o estado do `user` mudar
+
+    
 
     const toggleConfigModal = () => {
         setIsConfigModalOpen(!isConfigModalOpen);
@@ -111,7 +142,11 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
     };
 
     const handleTileClick = (date: Date) => {
-        const task = tasks.find(task => task.date.toDateString() === date.toDateString());
+        const task = tasks.find(task => 
+            task.date.getFullYear() === date.getFullYear() &&
+            task.date.getMonth() === date.getMonth() &&
+            task.date.getDate() === date.getDate()
+        );
         if (task) {
             setSelectedTaskMessage(task.message); // Exibe a mensagem da tarefa
             setSelectedTaskDate(task.date); // Armazena a data da tarefa
@@ -127,7 +162,8 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
             if (task) {
                 return (
                     <div className="task-indicator" onClick={() => handleTileClick(date)}>
-                        {/* Indica que há uma tarefa nesta data */}
+                        {/* Exibe a mensagem da tarefa no próprio calendário */}
+                        <span className="task-message-calendar">{task.message}</span>
                     </div>
                 );
             }
@@ -209,6 +245,12 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
     };
 
     const handleDeleteProject = async (projectId: string) => {
+
+        const isConfirmed = window.confirm("Você tem certeza que deseja excluir esta tarefa?");
+        if (!isConfirmed) {
+            return;
+        }
+
         console.log('Deletando projeto:', projectId);
         try {
             // Deletar o projeto no servidor
@@ -225,6 +267,12 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
     }
 
     const handleDeleteBoard = async (boardId: string) => {
+
+        const isConfirmed = window.confirm("Você tem certeza que deseja excluir esta tarefa?");
+        if (!isConfirmed) {
+            return;
+        }
+
         console.log('Deletando board:', boardId);
         try {
             // Deletar a board no servidor
@@ -290,11 +338,14 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
                                             <div className="boards-dropdown px-4 py-3">
                                                 {project.boards && project.boards.length > 0 ? (
                                                     project.boards.map((board) => (
-                                                        <div className="d-flex justify-content-between align-items-center">
+                                                        <div key={board._id} className="d-flex justify-content-between align-items-center">
                                                             <div
                                                                 key={board._id}  // A chave está sendo aplicada para cada board individual
                                                                 className="board-item"
-                                                                onClick={() => onBoardClick(board._id)}
+                                                                onClick={() => {
+                                                                    onBoardClick(board._id);
+                                                                    onClose();
+                                                                }}
                                                             >
                                                                 {board.name}
                                                                 
@@ -360,8 +411,10 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
                                         onChange={(e) => setNewProjectName(e.target.value)}
                                         placeholder="Nome do novo projeto"
                                     />
-                                    <button onClick={handleCreateProject}>Criar Projeto</button>
-                                    <button onClick={() => setIsCreatingProject(false)}>Cancelar</button>
+                                    <div className="d-flex justify-content-around mt-2">
+                                        <button className='botao-salvar-edit' onClick={handleCreateProject}>Criar Projeto</button>
+                                        <button className='botao-cancelar-edit' onClick={() => setIsCreatingProject(false)}>Cancelar</button>
+                                    </div>
                                 </div>
                             ) : (
                                 <button 
@@ -377,7 +430,7 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
 
                 <div className="demais-botoes">
 
-                    <div className="botoes-modal d-flex align-items-center px-2 my-2" onClick={toggleDropdown}>
+                    {/* <div className="botoes-modal d-flex align-items-center px-2 my-2" onClick={toggleDropdown}>
                         <CalendarMonthIcon sx={{ fontSize: 40 }} />
                         <p className="texto-botao-modal-hamburguer mx-3 mb-0">CALENDÁRIO</p>
                     </div>
@@ -392,7 +445,7 @@ export const ModalHamburguerUsuario: React.FC<ModalHamburguerUsuarioProps> = ({ 
                                 tileContent={getTileContent}
                             />
                         </div>
-                    )}
+                    )} */}
                     {selectedTaskMessage && selectedTaskDate && (
                         <div className="task-message">
                             <strong>Data:</strong> {selectedTaskDate.toLocaleDateString()} <br />

@@ -4,8 +4,6 @@ import './App.css';
 import AppRouter from './Router/routes';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-
-
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);

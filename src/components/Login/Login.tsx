@@ -71,11 +71,13 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
 
     const togglePosition = () => {
         setPosition((prevPosition) => (prevPosition === 'left' ? 'right' : 'left'));
+        setErrorMessage('');
+        setSuccessMessage('');
     };
-
+    
     return (
         <section className={`secao-login ${position === 'right' ? 'right' : ''}`}>
-            <div className={`half-ball-container ${position}`}> 
+            <div className={`half-ball-container ${position}`}>
                 <div className="half-ball"></div>
                 <div className="text-login-or-register">
                     {position === 'left' ? 'Ja possui uma conta?' : 'Não tem uma conta?'}
@@ -89,10 +91,12 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
                     <div className="row justify-content-around">
                         {/* Formulário de Login */}
                         <div className="col-4">
-                            {errorMessage && <div className="text-danger">{errorMessage}</div>}
-                            {successMessage && <div className="text-success">{successMessage}</div>}
                             <form onSubmit={handleLoginSubmit}>
                                 <div className="login-div d-flex flex-column">
+                                    <div className="mensagen">
+                                        {errorMessage && <div className="text-danger">{errorMessage}</div>}
+                                        {successMessage && <div className="text-success">{successMessage}</div>}
+                                    </div>
                                     <p className='title-login'>Faça login</p>
                                     <div className='email-div d-flex flex-column align-items-start'>
                                         <label>Email:</label>
@@ -112,10 +116,10 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
                                             onChange={(e) => setPassword(e.target.value)} 
                                         />
                                     </div>
-                                </div>
-                                <div className="row d-flex justify-content-center">
-                                    <div className="botao-login col-6 mt-4">
-                                        <button type="submit">ENTRAR</button>
+                                    <div className="row d-flex justify-content-center">
+                                        <div className="botao-login col-6 mt-4">
+                                            <button type="submit">ENTRAR</button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -123,10 +127,12 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
 
                         {/* Formulário de Registro */}
                         <div className="col-5 d-flex justify-content-end">
-                        {errorMessage && <div className="text-danger">{errorMessage}</div>}
-                        {successMessage && <div className="text-success">{successMessage}</div>}
                             <form onSubmit={handleRegisterSubmit}>
                                 <div className="login-div d-flex flex-column">
+                                    <div className="mensagen">
+                                        {errorMessage && <div className="text-danger">{errorMessage}</div>}
+                                        {successMessage && <div className="text-success">{successMessage}</div>}
+                                    </div>
                                     <p className='title-login'>Crie uma conta</p>
                                     <div className='email-div d-flex flex-column align-items-start'>
                                         <label>Email:</label>
@@ -146,10 +152,10 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
                                             onChange={(e) => setRegisterPassword(e.target.value)} 
                                         />
                                     </div>
-                                </div>
-                                <div className="row d-flex justify-content-center">
-                                    <div className="botao-login col-6 mt-4">
-                                        <button type="submit">CRIAR CONTA</button>
+                                    <div className="row d-flex justify-content-center">
+                                        <div className="botao-login col-6 mt-4">
+                                            <button type="submit">CRIAR CONTA</button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>

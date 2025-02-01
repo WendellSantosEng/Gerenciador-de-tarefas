@@ -67,7 +67,7 @@ export const ModalConfigUsuario: React.FC<ModalConfigUsuarioProps> = ({ isOpen, 
     return (
         <div className={`modal-config ${isOpen ? 'open' : ''}`}>
             <div className="cabecalho-modal">
-                <div onClick={onClose}>
+                <div className="svg-fechar-icon" onClick={onClose}>
                     <IconeFechar />
                 </div>
             </div>
@@ -77,40 +77,29 @@ export const ModalConfigUsuario: React.FC<ModalConfigUsuarioProps> = ({ isOpen, 
                     <div className="box-cores d-flex justify-content-around">
                         {colors.map((color, index) => (
                             <div
-                                key={index}
+                                key={`${color}-${index}`} // Combinação para gerar um identificador único
                                 className="cor-bolinha"
-                                style={{ backgroundColor: color, width: 50, height: 50, borderRadius: '50%', cursor: 'pointer', position: 'relative' }}
+                                style={{
+                                    backgroundColor: color,
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: '50%',
+                                    cursor: 'pointer',
+                                    position: 'relative',
+                                }}
                                 onClick={() => {
                                     setActivePickerIndex(index);
                                     setSelectedColor(color);
                                 }}
                             >
                                 {activePickerIndex === index && (
-                                    <div className="picker-container" style={{ position: 'absolute', zIndex: 1000 }} onClick={(e) => e.stopPropagation()}>
+                                    <div
+                                        className="picker-container"
+                                        style={{ position: 'absolute', zIndex: 1000 }}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
                                         <HexColorPicker color={selectedColor} onChange={handleColorChange} />
                                         <button onClick={() => confirmColor(index, 'section1')}>OK</button>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="titulo-cores-secao2">EDITAR CORES DE FUNDO - SEÇÃO 2</div>
-                    <div className="box-cores d-flex justify-content-around">
-                        {section2Colors.map((color, index) => (
-                            <div
-                                key={index}
-                                className="cor-bolinha"
-                                style={{ backgroundColor: color, width: 50, height: 50, borderRadius: '50%', cursor: 'pointer', position: 'relative' }}
-                                onClick={() => {
-                                    setActivePickerIndex2(index);
-                                    setSelectedColor(color);
-                                }}
-                            >
-                                {activePickerIndex2 === index && (
-                                    <div className="picker-container" style={{ position: 'absolute', zIndex: 1000 }} onClick={(e) => e.stopPropagation()}>
-                                        <HexColorPicker color={selectedColor} onChange={handleColorChange} />
-                                        <button onClick={() => confirmColor(index, 'section2')}>OK</button>
                                     </div>
                                 )}
                             </div>
@@ -130,10 +119,6 @@ export const ModalConfigUsuario: React.FC<ModalConfigUsuarioProps> = ({ isOpen, 
                         <br />
                         Desenvolvido por Wendell Santos.<br />
                         Para mais informações, entre em contato: wendellsdev@gmail.com.
-                    </h6>
-                    <h6>
-                        <br />
-                        Termos de uso | Política de privacidade
                     </h6>
                 </div>
             </div>

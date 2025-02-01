@@ -60,19 +60,20 @@
     font-weight: 600;
 }
 
-.ver-perfil-button,
-.sair-button{
+#ver-perfil-button,
+#sair-button{
     height: 60px;
     border-radius: 10px;
     background: var(--section1-color-1);
+    border: 1px solid var(--section1-color-3);
     .texto-botao-modal-user{
-        color: white;
+        color: var(--section1-color-3);
         font-size: 20px;
     }
 }
 
-.ver-perfil-button:hover,
-.sair-button:hover{
+#ver-perfil-button:hover,
+#sair-button:hover{
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 0.6;
 }

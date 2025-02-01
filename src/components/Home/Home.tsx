@@ -59,7 +59,7 @@ const Home: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [editingTask, setEditingTask] = useState<string | null>(null); // Controla qual tarefa está sendo editada
     const [editedTask, setEditedTask] = useState<{ name: string; description: string; status: string } | null>(null as { name: string; description: string;status: string } | null);
-    const [editingColumn, setEditingColumn] = useState<string | null>(null); // Controla qual coluna está sendo editada
+    const [editingColumn, setEditingColumn] = useState<string | null>(null);
     const [editedColumnName, setEditedColumnName] = useState<string>("");
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -69,6 +69,11 @@ const Home: React.FC = () => {
     const opentask = Boolean(anchorElTask);
     const handleClickEditTask = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorElTask(event.currentTarget);};
     const handleCloseEditTask = () => {setAnchorElTask(null);};
+
+
+    useEffect(() => {
+        console.log("Coluna sendo editada:", editingColumn);
+    }, [editingColumn]);
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
@@ -108,12 +113,12 @@ const Home: React.FC = () => {
                 // Limpa as colunas e tarefas ao mudar de board
                 setColumns([]);
                 setTasks([]);
-        
+            
                 // Buscar o board
                 console.log("Buscando dados do board com ID", selectedBoardId);
                 const boardResponse = await axios.get(`http://localhost:3000/boards/${selectedBoardId}`);
                 setBoard(boardResponse.data);
-        
+            
                 // Buscar as colunas associadas ao board
                 const columnPromises = boardResponse.data.columnIds.map((columnId: string) =>
                     axios.get(`http://localhost:3000/columns/${columnId}`).catch((error) => {
@@ -121,7 +126,7 @@ const Home: React.FC = () => {
                         return null; // Retorne null ou algum valor padrão para lidar com falhas
                     })
                 );
-        
+            
                 const columnResponses = await Promise.all(columnPromises);
                 columnResponses.forEach((response, index) => {
                     if (response === null) {
@@ -130,23 +135,30 @@ const Home: React.FC = () => {
                         console.log(`Coluna carregada com sucesso:`, response.data);
                     }
                 });
-                const fetchedColumns = columnResponses.map((response) => response.data);
+                const fetchedColumns = columnResponses.map((response) => response?.data);
                 setColumns(fetchedColumns);
-        
+            
                 // Buscar todas as tarefas de cada coluna
                 const taskPromises = fetchedColumns.map((column: Column) =>
                     axios.get('http://localhost:3000/tasks', {
                         params: { columnId: column._id },
                     })
                 );
-        
+            
                 const taskResponses = await Promise.all(taskPromises);
-                const allTasks = taskResponses.flatMap((response) => response?.data || []);
-                setTasks(allTasks);
-                console.log("Tarefas carregadas com sucesso:", allTasks);
+                let allTasks = taskResponses.flatMap((response) => response?.data || []);
+            
+                // Remove duplicatas das tarefas com base no ID
+                const uniqueTasks = Array.from(
+                    new Map(allTasks.map((task) => [task._id, task])).values()
+                );
+            
+                setTasks(uniqueTasks);
+                console.log("Tarefas carregadas e duplicatas removidas:", uniqueTasks);
             } catch (error) {
                 console.error("Erro ao carregar dados do board:", error);
             }
+            
         };
                 
         if (selectedBoardId) {
@@ -198,6 +210,11 @@ const Home: React.FC = () => {
     };
 
     const deleteTask = async (taskId: string, columnId: string) => {
+        const isConfirmed = window.confirm("Você tem certeza que deseja excluir esta tarefa?");
+        if (!isConfirmed) {
+            return;
+        }
+    
         try {
             // 1. Atualiza o estado local para remover a tarefa da interface imediatamente
             setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
@@ -263,6 +280,12 @@ const Home: React.FC = () => {
     };
 
     const handleDeleteColumn = async (columnId: string) => {
+
+        const isConfirmed = window.confirm("Você tem certeza que deseja excluir esta coluna?");
+        if (!isConfirmed) {
+            return;
+        }
+
         try {
             // Envia a requisição para deletar a coluna
             const response = await axios.delete(`http://localhost:3000/columns/${columnId}`, {
@@ -342,6 +365,9 @@ const Home: React.FC = () => {
     };
 
     const handleColumnEditClick = (columnId: string, columnName: string) => {
+        console.log("Clicou na coluna ID:", columnId);
+    
+        // Garante que o estado é atualizado corretamente
         setEditingColumn(columnId);
         setEditedColumnName(columnName);
     };
@@ -387,15 +413,15 @@ const Home: React.FC = () => {
                             </div>
                         </div>
                         {board && (
-                            <div className="col-5 d-flex align-items-center justify-content-center">
+                            <div className="col-10 d-flex align-items-center justify-content-center">
                                 <span className="board-name-top">{board.name}</span>
                             </div>
                         )}
-                        <div className="col-5">
-                            <Search setData={setData} setLoading={setLoading} />
-                        </div>
+                        {/* <div className="col-5"> */}
+                            {/* <Search setData={setData} setLoading={setLoading} /> */}
+                        {/* </div> */}
                         <div className="col-1">
-                            <div onClick={toggleModal}>
+                            <div className="iconeuser" onClick={toggleModal}>
                                 <IconeUsuario />
                             </div>
                         </div>
@@ -408,77 +434,81 @@ const Home: React.FC = () => {
                 {selectedBoardId && board && (
                     <div className="board-details">
                     {columns.map((column) => (
+                        
                     <div
                         key={column._id || column.id}
                         className="column"
                         onDragOver={handleDragOver}
-                        onDrop={(e) => handleDrop(e, column._id!)}
-                    >
+                        onDrop={(e) => handleDrop(e, column._id!)} 
+                    >  
                         <div className="mb-3">
-                            <div className="column-header">
-                                {editingColumn === column._id ? (
-                                    <>
-                                        <input
-                                            type="text"
-                                            value={editedColumnName}
-                                            onChange={handleColumnNameChange}
-                                        />
-                                        <button onClick={() => handleUpdateColumn(column._id!)}>Salvar</button>
-                                        <button onClick={cancelColumnEdit}>Cancelar</button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className="d-flex justify-content-between align-items-center mb-3">
-                                            <h3 className='m-0'>{column.name}</h3>
-                                            <div>
-                                                <Button
-                                                    id="basic-button"
-                                                    aria-controls={open ? 'basic-menu' : undefined}
-                                                    aria-haspopup="true"
-                                                    aria-expanded={open ? 'true' : undefined}
-                                                    onClick={handleClick}
-                                                >
-                                                    <DragIndicatorIcon color="action" />
-                                                </Button>
-                                                <Menu
-                                                    id="basic-menu"
-                                                    anchorEl={anchorEl}
-                                                    open={open}
-                                                    onClose={handleClose}
-                                                    MenuListProps={{
+                        <div className="column-header">
+                            {editingColumn === column._id ? (
+                                <>
+                                    <input
+                                        type="text"
+                                        value={editedColumnName}
+                                        onChange={handleColumnNameChange}
+                                        autoFocus
+                                    />
+                                    <div className="d-flex justify-content-around mt-2">
+                                        <button className="botao-salvar-edit" onClick={() => handleUpdateColumn(column._id!)}>
+                                            Salvar
+                                        </button>
+                                        <button className="botao-cancelar-edit" onClick={cancelColumnEdit}>
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="d-flex justify-content-between align-items-center mb-3">
+                                        <h3 className="m-0" onClick={() => handleColumnEditClick(column._id!, column.name)}>
+                                            {column.name}
+                                        </h3>
+                                        <div>
+                                            <Button
+                                                id="basic-button"
+                                                aria-controls={open ? 'basic-menu' : undefined}
+                                                aria-haspopup="true"
+                                                aria-expanded={open ? 'true' : undefined}
+                                                onClick={handleClick}
+                                            >
+                                                <DragIndicatorIcon color="action" focusable="false" />
+                                            </Button>
+
+                                            <Menu
+                                                id="basic-menu"
+                                                anchorEl={anchorEl}
+                                                open={open}
+                                                onClose={handleClose}
+                                                MenuListProps={{
                                                     'aria-labelledby': 'basic-button',
-                                                    }}
-                                                >
-                                                    <MenuItem onClick={handleClose}>
-                                                        <button
-                                                            className="dropdown-item"
-                                                            onClick={() => handleColumnEditClick(column._id!, column.name)}
-                                                        >
-                                                            Editar Nome
-                                                        </button>
-                                                    </MenuItem>
-                                                    <MenuItem onClick={handleClose}>
-                                                        <button
-                                                            className="dropdown-item"
-                                                            onClick={() => handleDeleteColumn(column._id || "")}
-                                                        >
-                                                            Apagar
-                                                        </button>
-                                                    </MenuItem>
-                                                    <MenuItem onClick={handleClose}>
-                                                        <button
-                                                            className="dropdown-item"
-                                                            onClick={() => handleCreateTask(column._id || "")}
-                                                        >
-                                                            Criar Tarefa
-                                                        </button>
-                                                    </MenuItem>
-                                                </Menu>
-                                            </div>
+                                                }}
+                                            >
+                                                <MenuItem onClick={handleClose}>
+                                                    <button
+                                                        className="dropdown-item"
+                                                        onClick={() => handleDeleteColumn(column._id || '')}
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </MenuItem>
+                                                <MenuItem onClick={handleClose}>
+                                                    <button
+                                                        className="dropdown-item"
+                                                        onClick={() => handleCreateTask(column._id || '')}
+                                                    >
+                                                        Criar Tarefa
+                                                    </button>
+                                                </MenuItem>
+                                            </Menu>
                                         </div>
-                                    </>
-                                )}
-                            </div>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+
                         </div>
                             <ul className="list-unstyled">
                                 {tasks

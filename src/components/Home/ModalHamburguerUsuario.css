@@ -53,7 +53,7 @@
 
 .info-user-text {
     font-size: 20px;
-    color: #000;
+    color: var(--section1-color-3);
 }
 
 .info-user-text {
@@ -62,21 +62,15 @@
     font-weight: 600;
 }
 
-.botoes-modal {
-    height: 60px;
-    border-radius: 10px;
-    background: var(--section1-color-1);
-}
-
 .texto-botao-modal-hamburguer {
-    color: white;
+    color: var(--section1-color-3);
     font-size: 20px;
 }
 
-.botoes-modal:hover {
+/* .botoes-modal:hover {
     cursor: pointer;
     opacity: 0.8;
-}
+} */
 
 .dropdown-calendar {
     margin-top: 10px;
